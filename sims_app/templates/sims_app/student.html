@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block title %}
+    Courses
+{% endblock %}
+
+{% block content %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Students</h1>
+        </div>
+
+
+        <div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentModal">
+                Add Student
+            </button>
+            {% include 'sims_common_templates/messages.html' %}
+
+            <!-- create course Modal -->
+            <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="studentModalLabel">Add Student Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'add-student' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="First_Name">First Name:</label>
+                                    <input type="text" class="form-control" id="First_Name" name="First_Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Last_Name">Last Name:</label>
+                                    <input type="text" class="form-control" id="Last_Name"
+                                           name="Last_Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Surname">Surname:</label>
+                                    <input type="text" class="form-control" id="Surname" name="Surname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email">Email:</label>
+                                    <input type="email" class="form-control" id="Email" name="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Phone_Number">Phone_Number:</label>
+                                    <input type="tel" pattern="^(0|\+)\d{8,15}$" class="form-control" id="Phone_Number"
+                                           name="Phone_Number" placeholder="07xxxxxxxx">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Reg No</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Is Cleared</th>
+                    <th scope="col">Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <th scope="row">{{ student.id }}</th>
+                        <td>{{ student.Reg_No }}</td>
+                        <td>{{ student.First_Name }} {{ student.Last_Name }} {{ student.Surname }}</td>
+                        <td>{{ student.Email }}</td>
+                        <td>{{ student.Phone_Number }}</td>
+                        <td>{{ student.Cleared }}</td>
+                        <td>
+                            <button data-toggle="modal" data-target="#update{{ student.id }}"
+                                    class="btn btn-sm btn-success">Update
+                            </button>
+                            <button data-toggle="modal" data-target="#delete{{ student.id }}"
+                                    class="btn btn-sm btn-warning">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- update course Modal -->
+                    <div class="modal fade" id="update{{ student.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="updateModal"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModal">Update Student Form</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'update-student' student.id%}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="First_Name">First Name:</label>
+                                    <input type="text" class="form-control" id="First_Name" name="First_Name"
+                                    value="{{ student.First_Name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Last_Name">Last Name:</label>
+                                    <input type="text" class="form-control" id="Last_Name"
+                                           name="Last_Name" value="{{ student.Last_Name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Surname">Surname:</label>
+                                    <input type="text" class="form-control" id="Surname" name="Surname"
+                                    value="{{ student.Surname}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Email">Email:</label>
+                                    <input type="email" class="form-control" id="Email" name="Email" value="{{ student.Email }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Phone_Number">Phone_Number:</label>
+                                    <input type="tel" pattern="^(0|\+)\d{8,15}$" class="form-control" id="Phone_Number"
+                                           name="Phone_Number" placeholder="07xxxxxxxx" value="{{ student.Phone_Number }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- delete course Modal -->
+                    <div class="modal fade" id="delete{{ student.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="deleteModal"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModal">Confirm Delete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'delete-student' student.id %}" method="post">
+                                        {% csrf_token %}
+                                        <p>Are you sure you want to delete "{{ student.Reg_No}}" ?</p>
+                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}

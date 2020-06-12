@@ -1,0 +1,52 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Zalego Python,Django students">
+    <title>{% block title %}Admin Login{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <!-- custom dashboard styles -->
+    <link rel="stylesheet" href="{% static 'css/frontend-custom-style.css' %}">
+    <!-- font-awesome css -->
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}">
+</head>
+
+<body>
+<!--  top navbar -->
+{% include 'frontend/common/navbar.html' %}
+{% include 'sims_common_templates/messages.html' %}
+<div class="container" id="container">
+
+    <div class="bg-dark p-5">
+        <h1 class="text-center">Admin LOGIN</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <input type="submit" value="Login" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+<footer>
+    <div class="row">
+        <div class="col text-center">
+            <p>Zalego Academy. All right rights reserved. &copy;2020 </p>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

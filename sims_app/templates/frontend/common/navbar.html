@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#FrontendNavBar" aria-controls="FrontendNavBar" aria-expanded="false"
+    aria-label="Toggle Navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="{% url 'view' %}"><strong>View Our Courses</strong></a>
+
+    <div class="collapse navbar-collapse" id="FrontendNavBar">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+        </ul>
+
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item">
+                <a href="{% url 'home' %}" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'admin-login' %}" class="nav-link">Admin</a>
+            </li>
+            {% if request.session.registration %}
+                <li class="nav-item">
+                    <a href="{% url 'mycourses' %}" class="nav-link btn btn-sm btn-success">My Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'student-logout' %}" class="nav-link">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'student-login' %}" class="nav-link">Login</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>

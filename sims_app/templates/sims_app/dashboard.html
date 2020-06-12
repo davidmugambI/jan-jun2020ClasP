@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+     {% include 'sims_common_templates/messages.html' %}
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Courses
+                    </div>
+                    <div class="card-body">
+                        <b>{{c_course}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Students
+                    </div>
+                    <div class="card-body">
+                        <b>{{c_stud}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Applications
+                    </div>
+                    <div class="card-body">
+                        <b>{{c_apps}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

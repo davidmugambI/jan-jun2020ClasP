@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Applications
+{% endblock %}
+
+{% block content %}
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Applications</h1>
+      </div>
+
+<div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" disabled data-toggle="modal" data-target="#exampleModal">
+                Enroll
+            </button>
+
+            {% include 'sims_common_templates/messages.html' %}
+            <!-- create course Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">ENROLL Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="Course_Name">Course Name:</label>
+                                    <input type="text" class="form-control" id="Course_Name" name="Course_Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Course_Duration">Course Duration:</label>
+                                    <input type="number" class="form-control" id="Course_Duration"
+                                           name="Course_Duration">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Course_Fee">Course Fee:</label>
+                                    <input type="number" class="form-control" id="Course_Fee" name="Course_Fee">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Reg No</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Course Duration</th>
+                    <th scope="col">Application Active</th>
+                    <th scope="col" style="display: none" >Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for application in applications %}
+                    <tr>
+                        <th scope="row">{{ application.id }}</th>
+                        <td>{{ application.student.Reg_No }}</td>
+                        <td>
+                            {{ application.student.First_Name }}
+                            {{ application.student.Last_Name }}
+                            {{ application.student.Surname }}
+                        </td>
+                        <td>{{ application.course.Course_Name }}</td>
+                        <td>{{ application.course.Course_Duration }}</td>
+                        <td>{{ application.course.IsActive }}</td>
+                        <td style="display: none">
+                            <button data-toggle="modal" data-target="#update{{ course.id }}"
+                                    class="btn btn-sm btn-success">Update
+                            </button>
+                            <button data-toggle="modal" data-target="#delete{{ course.id }}"
+                                    class="btn btn-sm btn-warning">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- update course Modal -->
+                    <div class="modal fade" id="update{{ course.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="updateModal"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateModal">Update Course Form</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="Course_Name">Course Name:</label>
+                                            <input type="text" class="form-control" id="Course_Name" name="Course_Name"
+                                                   value="{{ course.Course_Name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Course_Duration">Course Duration:</label>
+                                            <input type="number" class="form-control" id="Course_Duration"
+                                                   name="Course_Duration" value="{{ course.Course_Duration }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Course_Fee">Course Fee:</label>
+                                            <input type="number" class="form-control" id="Course_Fee" name="Course_Fee"
+                                                   value="{{ course.Course_Fee }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- delete course Modal -->
+                    <div class="modal fade" id="delete{{ course.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="deleteModal"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModal">Confirm Delete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="#" method="post">
+                                        {% csrf_token %}
+                                        <p>Are you sure you want to delete "{{ course.Course_Name}}" ?</p>
+                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+{% endblock %}
